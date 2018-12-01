@@ -1,0 +1,23 @@
+version: '2'
+services:
+  nginx:
+    image: nginx:1.15.6
+    container_name: nginx
+    ports:
+      - '8080:80'
+    volumes:
+      - '$PWD/nginx.conf/default.conf:/etc/nginx/nginx.conf'
+      - '$PWD/nginx.conf/fastcgi.conf:/etc/nginx/fastcgi.conf'
+      - '$PWD/demo:/usr/share/nginx/html'
+      - '$PWD/logs:/var/log/nginx'
+    networks: 
+      - 'stack-academy-nginx-fundamentals'  
+  php:
+    image: php:7.2.2-fpm
+    container_name: php-fpm
+    volumes:
+      - '$PWD/demo:/usr/share/nginx/html'
+    networks: 
+      - 'stack-academy-nginx-fundamentals'
+networks: 
+  stack-academy-nginx-fundamentals:
